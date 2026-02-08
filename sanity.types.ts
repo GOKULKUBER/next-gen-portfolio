@@ -226,16 +226,7 @@ export type Blog = {
     alt?: string;
     _type: "image";
   };
-  category?:
-    | "tutorial"
-    | "technical"
-    | "ai-ml"
-    | "web-dev"
-    | "career"
-    | "opinion"
-    | "showcase"
-    | "best-practices"
-    | "news";
+  category?: "tutorial" | "technical" | "ai-ml" | "web-dev" | "career" | "opinion" | "showcase" | "best-practices" | "news";
   tags?: Array<string>;
   publishedAt?: string;
   readTime?: number;
@@ -248,15 +239,7 @@ export type Achievement = {
   _updatedAt: string;
   _rev: string;
   title?: string;
-  type?:
-    | "award"
-    | "hackathon"
-    | "publication"
-    | "speaking"
-    | "open-source"
-    | "milestone"
-    | "recognition"
-    | "other";
+  type?: "award" | "hackathon" | "publication" | "speaking" | "open-source" | "milestone" | "recognition" | "other";
   issuer?: string;
   date?: string;
   description?: string;
@@ -393,12 +376,7 @@ export type Experience = {
   _rev: string;
   company?: string;
   position?: string;
-  employmentType?:
-    | "full-time"
-    | "part-time"
-    | "contract"
-    | "freelance"
-    | "internship";
+  employmentType?: "full-time" | "part-time" | "contract" | "freelance" | "internship";
   location?: string;
   startDate?: string;
   endDate?: string;
@@ -454,19 +432,7 @@ export type Skill = {
   _updatedAt: string;
   _rev: string;
   name?: string;
-  category?:
-    | "frontend"
-    | "backend"
-    | "ai-ml"
-    | "devops"
-    | "database"
-    | "mobile"
-    | "cloud"
-    | "testing"
-    | "design"
-    | "tools"
-    | "soft-skills"
-    | "other";
+  category?: "frontend" | "backend" | "ai-ml" | "devops" | "database" | "mobile" | "cloud" | "testing" | "design" | "tools" | "soft-skills" | "other";
   proficiency?: "beginner" | "intermediate" | "advanced" | "expert";
   percentage?: number;
   yearsOfExperience?: number;
@@ -502,18 +468,7 @@ export type Project = {
     _key: string;
     [internalGroqTypeReferenceTo]?: "skill";
   }>;
-  category?:
-    | "web-app"
-    | "mobile-app"
-    | "ai-ml"
-    | "api-backend"
-    | "devops"
-    | "open-source"
-    | "cli-tool"
-    | "desktop-app"
-    | "browser-extension"
-    | "game"
-    | "other";
+  category?: "web-app" | "mobile-app" | "ai-ml" | "api-backend" | "devops" | "open-source" | "cli-tool" | "desktop-app" | "browser-extension" | "game" | "other";
   liveUrl?: string;
   githubUrl?: string;
   featured?: boolean;
@@ -682,29 +637,5 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes =
-  | Navigation
-  | SiteSettings
-  | SanityImageCrop
-  | SanityImageHotspot
-  | Contact
-  | Service
-  | Slug
-  | Blog
-  | Achievement
-  | Certification
-  | Testimonial
-  | Education
-  | Experience
-  | Skill
-  | Project
-  | Profile
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityImageMetadata
-  | SanityFileAsset
-  | SanityAssetSourceData
-  | SanityImageAsset
-  | Geopoint;
+export type AllSanitySchemaTypes = Navigation | SiteSettings | SanityImageCrop | SanityImageHotspot | Contact | Service | Slug | Blog | Achievement | Certification | Testimonial | Education | Experience | Skill | Project | Profile | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;

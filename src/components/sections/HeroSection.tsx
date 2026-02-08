@@ -47,8 +47,8 @@ export async function HeroSection() {
                 <span className="text-primary">{profile.lastName}</span>
               </h1>
               {profile.headlineStaticText &&
-              profile.headlineAnimatedWords &&
-              profile.headlineAnimatedWords.length > 0 ? (
+                profile.headlineAnimatedWords &&
+                profile.headlineAnimatedWords.length > 0 ? (
                 <LayoutTextFlip
                   text={profile.headlineStaticText}
                   words={profile.headlineAnimatedWords}
@@ -135,13 +135,13 @@ export async function HeroSection() {
             {profile.profileImage && (
               <ProfileImage
                 imageUrl={urlFor(profile.profileImage)
-                .width(600)
-                .height(600)
-                .url()}
+                  .width(600)
+                  .height(600)
+                  .url()}
                 firstName={profile.firstName || ""}
                 lastName={profile.lastName || ""}
               />
-            )} 
+            )}
           </div>
         </div>
       </div>
