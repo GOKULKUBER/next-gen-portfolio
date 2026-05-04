@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import type { Profile } from "../../../sanity.types";
 import { useSidebar } from "../ui/sidebar";
-import CHAT_PROFILE_QUERYResult from "@/sanity.types"
 
-export function Chat({
-  profile,
-}: {
-  profile: CHAT_PROFILE_QUERYResult | null;
-}) {
+type ChatMessage = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+};
+
+export function Chat({ profile }: { profile: Profile | null }) {
   const { toggleSidebar } = useSidebar();
 
-  const [messages, setMessages] = useState<
-    { role: "user" | "assistant"; content: string }[]
-  >([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,9 +33,13 @@ export function Chat({
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    const userMessage = { role: "user", content: input };
+    const userMessage: ChatMessage = {
+      id: crypto.randomUUID(),
+      role: "user",
+      content: input,
+    };
 
-    setMessages((prev: any) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
@@ -44,7 +48,10 @@ export function Chat({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [...messages, userMessage],
+          messages: [...messages, userMessage].map(({ role, content }) => ({
+            role,
+            content,
+          })),
         }),
       });
 
@@ -54,7 +61,11 @@ export function Chat({
         const errorMessage = data?.error ?? `Request failed (${res.status})`;
         setMessages((prev) => [
           ...prev,
-          { role: "assistant" as const, content: `Error: ${errorMessage}` },
+          {
+            id: crypto.randomUUID(),
+            role: "assistant" as const,
+            content: `Error: ${errorMessage}`,
+          },
         ]);
         return;
       }
@@ -62,13 +73,18 @@ export function Chat({
       const reply = data?.reply ?? "No response from assistant.";
       setMessages((prev) => [
         ...prev,
-        { role: "assistant" as const, content: reply },
+        { id: crypto.randomUUID(), role: "assistant" as const, content: reply },
       ]);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Something went wrong";
+      const message =
+        err instanceof Error ? err.message : "Something went wrong";
       setMessages((prev) => [
         ...prev,
-        { role: "assistant" as const, content: `Error: ${message}` },
+        {
+          id: crypto.randomUUID(),
+          role: "assistant" as const,
+          content: `Error: ${message}`,
+        },
       ]);
     } finally {
       setLoading(false);
@@ -76,51 +92,59 @@ export function Chat({
   };
 
   return (
-    <div className="flex flex-col h-full w-full">
+    <div className="flex h-full w-full flex-col bg-sidebar text-sidebar-foreground">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b">
-        <h2 className="font-semibold text-black">
+      <div className="flex items-center justify-between border-b border-sidebar-border p-4">
+        <h2 className="font-semibold text-sidebar-foreground">
           Chat with {profile?.firstName || "Me"}'s assistant
         </h2>
-        <button onClick={toggleSidebar} className="text-black">✕</button>
+        <button
+          type="button"
+          onClick={toggleSidebar}
+          className="text-sidebar-foreground hover:text-sidebar-foreground/70"
+        >
+          ✕
+        </button>
       </div>
 
       {/* Chat area */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {messages.length === 0 && (
-          <p className="text-gray-500">{getGreeting()}</p>
+          <p className="text-muted-foreground">{getGreeting()}</p>
         )}
 
-        {messages.map((msg, idx) => (
+        {messages.map((msg) => (
           <div
-            key={idx}
-            className={`p-3 rounded-lg max-w-[80%] ${msg.role === "user"
-                ? "ml-auto bg-black text-white"
-                : "mr-auto bg-gray-200"
-              }`}
+            key={msg.id}
+            className={`max-w-[80%] rounded-lg p-3 ${
+              msg.role === "user"
+                ? "ml-auto bg-primary text-primary-foreground"
+                : "mr-auto bg-muted text-muted-foreground"
+            }`}
           >
             {msg.content}
           </div>
         ))}
 
         {loading && (
-          <div className="mr-auto text-gray-500">Thinking...</div>
+          <div className="mr-auto text-muted-foreground">Thinking...</div>
         )}
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t flex gap-2">
+      <div className="flex gap-2 border-t border-sidebar-border p-4">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Type your message..."
-          className="flex-1 border rounded px-3 py-2"
+          className="flex-1 rounded border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
         />
         <button
+          type="button"
           onClick={sendMessage}
           disabled={loading}
-          className="px-4 py-2 bg-black text-white rounded"
+          className="rounded bg-primary px-4 py-2 text-primary-foreground disabled:cursor-not-allowed disabled:opacity-50"
         >
           Send
         </button>

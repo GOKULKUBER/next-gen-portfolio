@@ -116,12 +116,12 @@ export default defineType({
       fields: [
         { name: "github", title: "GitHub", type: "url" },
         { name: "linkedin", title: "LinkedIn", type: "url" },
-        { name: "twitter", title: "Twitter/X", type: "url" },
-        { name: "website", title: "Personal Website", type: "url" },
-        { name: "medium", title: "Medium", type: "url" },
-        { name: "devto", title: "Dev.to", type: "url" },
-        { name: "youtube", title: "YouTube", type: "url" },
-        { name: "stackoverflow", title: "Stack Overflow", type: "url" },
+        // { name: "twitter", title: "Twitter/X", type: "url" },
+        // { name: "website", title: "Personal Website", type: "url" },
+        // { name: "medium", title: "Medium", type: "url" },
+        // { name: "devto", title: "Dev.to", type: "url" },
+        // { name: "youtube", title: "YouTube", type: "url" },
+        // { name: "stackoverflow", title: "Stack Overflow", type: "url" },
       ],
     }),
     defineField({
