@@ -1,8 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { safeSanityFetch } from "@/sanity/lib/live";
+import type { Blog } from "../../../sanity.types";
 
 const BLOG_QUERY = defineQuery(`*[_type == "blog"] | order(publishedAt desc){
   title,
@@ -19,8 +19,9 @@ export async function BlogSection() {
   const { data: posts } = await safeSanityFetch({
     query: BLOG_QUERY,
   });
+  const blogPosts = posts as Blog[] | null;
 
-  if (!posts || posts.length === 0) {
+  if (!blogPosts || blogPosts.length === 0) {
     return null;
   }
 
@@ -46,7 +47,7 @@ export async function BlogSection() {
 
         <div className="@container">
           <div className="grid grid-cols-1 @2xl:grid-cols-2 @5xl:grid-cols-3 gap-8">
-            {posts.map((post) => (
+            {blogPosts.map((post) => (
               <article
                 key={post.slug?.current}
                 className="@container/card group bg-card border rounded-lg overflow-hidden hover:shadow-xl transition-all duration-300"

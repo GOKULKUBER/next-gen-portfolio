@@ -4,6 +4,7 @@ import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
 import { safeSanityFetch } from "@/sanity/lib/live";
+import type { Achievement } from "../../../sanity.types";
 
 const ACHIEVEMENTS_QUERY =
   defineQuery(`*[_type == "achievement"] | order(date desc){
@@ -22,8 +23,9 @@ export async function AchievementsSection() {
   const { data: achievements } = await safeSanityFetch({
     query: ACHIEVEMENTS_QUERY,
   });
+  const achievementList = achievements as Achievement[] | null;
 
-  if (!achievements || achievements.length === 0) {
+  if (!achievementList || achievementList.length === 0) {
     return null;
   }
 
@@ -65,8 +67,9 @@ export async function AchievementsSection() {
   };
 
   // Separate featured and regular achievements
-  const featured = achievements.filter((a) => a.featured);
-  const regular = achievements.filter((a) => !a.featured);
+  const featured = achievementList.filter(
+    (achievement) => achievement.featured,
+  );
 
   return (
     <section id="achievements" className="py-20 px-6 bg-muted/30">
