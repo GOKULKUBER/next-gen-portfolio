@@ -2,7 +2,7 @@ import { PortableText } from "@portabletext/react";
 import Image from "next/image";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const EXPERIENCE_QUERY =
   defineQuery(`*[_type == "experience"] | order(startDate desc){
@@ -22,7 +22,7 @@ const EXPERIENCE_QUERY =
 }`);
 
 export async function ExperienceSection() {
-  const { data: experiences } = await sanityFetch({ query: EXPERIENCE_QUERY });
+  const { data: experiences } = await safeSanityFetch({ query: EXPERIENCE_QUERY });
 
   if (!experiences || experiences.length === 0) {
     return null;

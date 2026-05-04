@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const ACHIEVEMENTS_QUERY =
   defineQuery(`*[_type == "achievement"] | order(date desc){
@@ -19,7 +19,7 @@ const ACHIEVEMENTS_QUERY =
 }`);
 
 export async function AchievementsSection() {
-  const { data: achievements } = await sanityFetch({
+  const { data: achievements } = await safeSanityFetch({
     query: ACHIEVEMENTS_QUERY,
   });
 
@@ -157,7 +157,7 @@ export async function AchievementsSection() {
           </div>
         )}
 
-        {/* Regular Achievements */}
+        {/* Regular Achievements
         {regular.length > 0 && (
           <div>
             {featured.length > 0 && (
@@ -233,7 +233,7 @@ export async function AchievementsSection() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );

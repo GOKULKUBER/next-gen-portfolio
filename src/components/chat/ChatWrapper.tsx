@@ -1,6 +1,6 @@
 import { defineQuery } from "next-sanity";
 import Chat from "@/components/chat/Chat";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 import SidebarToggle from "../SidebarToggle";
 
 const CHAT_PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
@@ -23,7 +23,7 @@ const CHAT_PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
   }`);
 
 async function ChatWrapper() {
-  const { data: profile } = await sanityFetch({ query: CHAT_PROFILE_QUERY });
+  const { data: profile } = await safeSanityFetch({ query: CHAT_PROFILE_QUERY });
 
   return (
     <div className="h-full w-full">

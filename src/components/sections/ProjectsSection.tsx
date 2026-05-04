@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const PROJECTS_QUERY =
   defineQuery(`*[_type == "project" && featured == true] | order(order asc)[0...6]{
@@ -17,7 +17,7 @@ const PROJECTS_QUERY =
 }`);
 
 export async function ProjectsSection() {
-  const { data: projects } = await sanityFetch({ query: PROJECTS_QUERY });
+  const { data: projects } = await safeSanityFetch({ query: PROJECTS_QUERY });
 
   if (!projects || projects.length === 0) {
     return null;

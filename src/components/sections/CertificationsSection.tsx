@@ -4,7 +4,7 @@ import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { CometCard } from "@/components/ui/comet-card";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const CERTIFICATIONS_QUERY =
   defineQuery(`*[_type == "certification"] | order(issueDate desc){
@@ -21,7 +21,7 @@ const CERTIFICATIONS_QUERY =
 }`);
 
 export async function CertificationsSection() {
-  const { data: certifications } = await sanityFetch({
+  const { data: certifications } = await safeSanityFetch({
     query: CERTIFICATIONS_QUERY,
   });
 

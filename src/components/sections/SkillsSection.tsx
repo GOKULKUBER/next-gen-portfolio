@@ -1,5 +1,5 @@
 import { defineQuery } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 import { SkillsChart } from "./SkillsChart";
 
 const SKILLS_QUERY =
@@ -13,7 +13,7 @@ const SKILLS_QUERY =
 }`);
 
 export async function SkillsSection() {
-  const { data: skills } = await sanityFetch({ query: SKILLS_QUERY });
+  const { data: skills } = await safeSanityFetch({ query: SKILLS_QUERY });
 
   if (!skills || skills.length === 0) {
     return null;

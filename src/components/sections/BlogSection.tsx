@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const BLOG_QUERY = defineQuery(`*[_type == "blog"] | order(publishedAt desc){
   title,
@@ -16,7 +16,7 @@ const BLOG_QUERY = defineQuery(`*[_type == "blog"] | order(publishedAt desc){
 }`);
 
 export async function BlogSection() {
-  const { data: posts } = await sanityFetch({
+  const { data: posts } = await safeSanityFetch({
     query: BLOG_QUERY,
   });
 
@@ -110,12 +110,12 @@ export async function BlogSection() {
                     </div>
                   )}
 
-                  <Link
+                  {/* <Link
                     href={`/blog/${post.slug?.current}`}
                     className="inline-flex items-center text-primary hover:underline text-xs @md/card:text-sm font-medium"
                   >
                     Read More →
-                  </Link>
+                  </Link> */}
                 </div>
               </article>
             ))}

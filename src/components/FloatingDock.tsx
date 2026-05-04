@@ -1,5 +1,5 @@
 import { defineQuery } from "next-sanity";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 import { FloatingDockClient } from "./FloatingDockClient";
 
 const NAVIGATION_QUERY =
@@ -11,7 +11,7 @@ const NAVIGATION_QUERY =
 }`);
 
 export async function FloatingDock() {
-  const { data: navItems } = await sanityFetch({ query: NAVIGATION_QUERY });
+  const { data: navItems } = await safeSanityFetch({ query: NAVIGATION_QUERY });
 
   if (!navItems || navItems.length === 0) {
     return null;

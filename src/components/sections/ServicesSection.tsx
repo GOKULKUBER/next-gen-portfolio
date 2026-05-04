@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const SERVICES_QUERY =
   defineQuery(`*[_type == "service"] | order(order asc, _createdAt desc){
@@ -23,7 +23,7 @@ const SERVICES_QUERY =
 }`);
 
 export async function ServicesSection() {
-  const { data: services } = await sanityFetch({ query: SERVICES_QUERY });
+  const { data: services } = await safeSanityFetch({ query: SERVICES_QUERY });
 
   if (!services || services.length === 0) {
     return null;
@@ -186,7 +186,7 @@ export async function ServicesSection() {
         )}
 
         {/* Regular Services */}
-        {regular.length > 0 && (
+        {/* {regular.length > 0 && (
           <div>
             {featured.length > 0 && (
               <h3 className="text-2xl font-bold mb-6">All Services</h3>
@@ -252,7 +252,7 @@ export async function ServicesSection() {
               </div>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </section>
   );

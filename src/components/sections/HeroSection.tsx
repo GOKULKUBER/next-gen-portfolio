@@ -2,7 +2,7 @@ import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
 import { LayoutTextFlip } from "@/components/ui/layout-text-flip";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 import { ProfileImage } from "../ProfileImage";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -24,7 +24,7 @@ const HERO_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
 }`);
 
 export async function HeroSection() {
-  const { data: profile } = await sanityFetch({ query: HERO_QUERY });
+  const { data: profile } = await safeSanityFetch({ query: HERO_QUERY });
   if (!profile) {
     return null;
   }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import WorldMapDemo from "@/components/world-map-demo";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 import { ContactForm } from "./ContactForm";
 
 const PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
@@ -12,7 +12,7 @@ const PROFILE_QUERY = defineQuery(`*[_id == "singleton-profile"][0]{
 }`);
 
 export async function ContactSection() {
-  const { data: profile } = await sanityFetch({ query: PROFILE_QUERY });
+  const { data: profile } = await safeSanityFetch({ query: PROFILE_QUERY });
 
   if (!profile) {
     return null;
@@ -119,7 +119,7 @@ export async function ContactSection() {
                         LinkedIn
                       </Link>
                     )}
-                    {profile.socialLinks.twitter && (
+                    {/* {profile.socialLinks.twitter && (
                       <Link
                         href={profile.socialLinks.twitter}
                         target="_blank"
@@ -128,7 +128,7 @@ export async function ContactSection() {
                       >
                         Twitter
                       </Link>
-                    )}
+                    )} */}
                     {profile.socialLinks.website && (
                       <Link
                         href={profile.socialLinks.website}

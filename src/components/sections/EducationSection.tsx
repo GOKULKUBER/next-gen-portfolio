@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { defineQuery } from "next-sanity";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const EDUCATION_QUERY =
   defineQuery(`*[_type == "education"] | order(endDate desc, startDate desc){
@@ -22,7 +22,7 @@ const EDUCATION_QUERY =
 }`);
 
 export async function EducationSection() {
-  const { data: education } = await sanityFetch({ query: EDUCATION_QUERY });
+  const { data: education } = await safeSanityFetch({ query: EDUCATION_QUERY });
 
   if (!education || education.length === 0) {
     return null;

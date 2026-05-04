@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { urlFor } from "@/sanity/lib/image";
-import { sanityFetch } from "@/sanity/lib/live";
+import { safeSanityFetch } from "@/sanity/lib/live";
 
 const TESTIMONIALS_QUERY =
   defineQuery(`*[_type == "testimonial" && featured == true] | order(order asc){
@@ -17,7 +17,7 @@ const TESTIMONIALS_QUERY =
 }`);
 
 export async function TestimonialsSection() {
-  const { data: testimonials } = await sanityFetch({
+  const { data: testimonials } = await safeSanityFetch({
     query: TESTIMONIALS_QUERY,
   });
 
